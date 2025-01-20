@@ -1,0 +1,1 @@
+# mapped-enum-generator
