@@ -1,0 +1,36 @@
+// example schema with some enums
+datasource db {
+  provider = "postgresql"
+  url      = env("YOUR_DB")
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+generator enum {
+  provider = "node ./lib/enum.generator"
+  title    = "Mapped Enums"
+}
+
+enum UserRole {
+  ADMIN
+  CUSTOMER
+  JUST_LOOKING @map("just-looking-mapped-value")
+}
+
+enum UserSize {
+  SMALL_ONE                @map("mapped-value-for-small-one")
+  MEDIUM_TWO
+  LARGE_THREE
+  EXTREMELY_NOT_SMALL_FOUR
+}
+
+model User {
+  id    Int      @id @default(autoincrement())
+  email String   @unique
+  name  String
+  role  UserRole
+  size  UserSize
+}
